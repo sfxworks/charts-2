@@ -60,6 +60,10 @@ spec:
             - --cri
             - /run/containerd/containerd.sock
             {{- end }}
+            {{- if .Values.crio.enabled }}
+            - --cri
+            - /run/crio/crio.sock
+            {{- end }}
             - -K
             - /var/run/secrets/kubernetes.io/serviceaccount/token
             - -k
@@ -101,6 +105,10 @@ spec:
             {{- if .Values.containerd.enabled }}
             - mountPath: /host/run/containerd/containerd.sock
               name: containerd-socket
+            {{- end}}
+            {{- if .Values.crio.enabled }}
+            - mountPath: /host/run/crio/crio.sock
+              name: crio-socket
             {{- end}}
             - mountPath: /host/dev
               name: dev-fs
@@ -224,6 +232,11 @@ spec:
         - name: containerd-socket
           hostPath:
             path: {{ .Values.containerd.socket }}
+        {{- end}}
+        {{- if .Values.crio.enabled }}
+        - name: crio-socket
+          hostPath:
+            path: {{ .Values.crio.socket }}
         {{- end}}
         - name: dev-fs
           hostPath:

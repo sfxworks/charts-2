@@ -15,6 +15,10 @@ containerd:
   enabled: true
   socket: /run/containerd/containerd.sock
 
+crio:
+  enabled: true
+  socket: /run/crio/crio.sock
+
 resources:
   # Although resources needed are subjective on the actual workload we provide
   # a sane defaults ones. If you have more questions or concerns, please refer
